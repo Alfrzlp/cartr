@@ -11,55 +11,39 @@ Rcpp::Rostream<true>&  Rcpp::Rcout = Rcpp::Rcpp_cout_get();
 Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
 #endif
 
-// rcpparma_hello_world
-arma::mat rcpparma_hello_world();
-RcppExport SEXP _cartlm_rcpparma_hello_world() {
+// cartReg
+Rcpp::List cartReg(NumericVector& y, DataFrame& x, int max_depth, int min_samples_leaf, int min_samples_split, double min_ig);
+RcppExport SEXP _cartlm_cartReg(SEXP ySEXP, SEXP xSEXP, SEXP max_depthSEXP, SEXP min_samples_leafSEXP, SEXP min_samples_splitSEXP, SEXP min_igSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    rcpp_result_gen = Rcpp::wrap(rcpparma_hello_world());
+    Rcpp::traits::input_parameter< NumericVector& >::type y(ySEXP);
+    Rcpp::traits::input_parameter< DataFrame& >::type x(xSEXP);
+    Rcpp::traits::input_parameter< int >::type max_depth(max_depthSEXP);
+    Rcpp::traits::input_parameter< int >::type min_samples_leaf(min_samples_leafSEXP);
+    Rcpp::traits::input_parameter< int >::type min_samples_split(min_samples_splitSEXP);
+    Rcpp::traits::input_parameter< double >::type min_ig(min_igSEXP);
+    rcpp_result_gen = Rcpp::wrap(cartReg(y, x, max_depth, min_samples_leaf, min_samples_split, min_ig));
     return rcpp_result_gen;
 END_RCPP
 }
-// rcpparma_outerproduct
-arma::mat rcpparma_outerproduct(const arma::colvec& x);
-RcppExport SEXP _cartlm_rcpparma_outerproduct(SEXP xSEXP) {
+// predictCart
+Rcpp::NumericVector predictCart(Rcpp::List& model, DataFrame& X, std::string method);
+RcppExport SEXP _cartlm_predictCart(SEXP modelSEXP, SEXP XSEXP, SEXP methodSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const arma::colvec& >::type x(xSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpparma_outerproduct(x));
-    return rcpp_result_gen;
-END_RCPP
-}
-// rcpparma_innerproduct
-double rcpparma_innerproduct(const arma::colvec& x);
-RcppExport SEXP _cartlm_rcpparma_innerproduct(SEXP xSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const arma::colvec& >::type x(xSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpparma_innerproduct(x));
-    return rcpp_result_gen;
-END_RCPP
-}
-// rcpparma_bothproducts
-Rcpp::List rcpparma_bothproducts(const arma::colvec& x);
-RcppExport SEXP _cartlm_rcpparma_bothproducts(SEXP xSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const arma::colvec& >::type x(xSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpparma_bothproducts(x));
+    Rcpp::traits::input_parameter< Rcpp::List& >::type model(modelSEXP);
+    Rcpp::traits::input_parameter< DataFrame& >::type X(XSEXP);
+    Rcpp::traits::input_parameter< std::string >::type method(methodSEXP);
+    rcpp_result_gen = Rcpp::wrap(predictCart(model, X, method));
     return rcpp_result_gen;
 END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
-    {"_cartlm_rcpparma_hello_world", (DL_FUNC) &_cartlm_rcpparma_hello_world, 0},
-    {"_cartlm_rcpparma_outerproduct", (DL_FUNC) &_cartlm_rcpparma_outerproduct, 1},
-    {"_cartlm_rcpparma_innerproduct", (DL_FUNC) &_cartlm_rcpparma_innerproduct, 1},
-    {"_cartlm_rcpparma_bothproducts", (DL_FUNC) &_cartlm_rcpparma_bothproducts, 1},
+    {"_cartlm_cartReg", (DL_FUNC) &_cartlm_cartReg, 6},
+    {"_cartlm_predictCart", (DL_FUNC) &_cartlm_predictCart, 3},
     {NULL, NULL, 0}
 };
 
